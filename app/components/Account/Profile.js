@@ -47,6 +47,11 @@ class Profile extends React.Component {
   }
 
   render() {
+    const facebookLinkedAccount = this.props.user.facebook ? (
+      <a role="button" className="text-danger" onClick={this.handleUnlink.bind(this, 'facebook')}>Unlink your Facebook account</a>
+    ) : (
+      <a role="button" onClick={this.handleLink.bind(this, 'facebook')}>Link your Facebook account</a>
+    );
     return (
       <div className="container">
         <div className="panel">
@@ -133,6 +138,7 @@ class Profile extends React.Component {
               <legend>Linked Accounts</legend>
               <div className="form-group">
                 <div className="col-sm-offset-3 col-sm-4">
+                  <p>{facebookLinkedAccount}</p>
                 </div>
               </div>
             </div>

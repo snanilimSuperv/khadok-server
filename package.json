@@ -1,5 +1,5 @@
 {
-  "name": "still-cake",
+  "name": "divine-water",
   "version": "1.0.0",
   "description": "My app description",
   "scripts": {
@@ -30,7 +30,6 @@
     "moment": "^2.12.0",
     "mongoose": "^4.4.8",
     "morgan": "^1.7.0",
-    "node-sass-middleware": "^0.9.7",
     "nodemailer": "^2.3.0",
     "react": "15.1.0",
     "react-cookie": "^0.4.5",

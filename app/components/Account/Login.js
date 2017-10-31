@@ -61,6 +61,7 @@ class Login extends React.Component {
             </form>
             <div className="hr-title"><span>or</span></div>
             <div className="btn-toolbar text-center">
+        <button onClick={this.handleFacebook.bind(this)} className="btn btn-facebook">Sign in with Facebook</button>
             </div>
           </div>
         </div>

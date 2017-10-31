@@ -15,7 +15,6 @@ var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
 var moment = require('moment');
 var request = require('request');
-var sass = require('node-sass-middleware');
 var webpack = require('webpack');
 var config = require('./webpack.config');
 
@@ -66,7 +65,6 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.set('port', process.env.PORT || 3000);
 app.use(compression());
-app.use(sass({ src: path.join(__dirname, 'public'), dest: path.join(__dirname, 'public') }));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -111,6 +109,8 @@ app.post('/login', userController.loginPost);
 app.post('/forgot', userController.forgotPost);
 app.post('/reset/:token', userController.resetPost);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
+app.post('/auth/facebook', userController.authFacebook);
+app.get('/auth/facebook/callback', userController.authFacebookCallback);
 
 // React server rendering
 app.use(function(req, res) {

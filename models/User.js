@@ -12,10 +12,7 @@ var schemaOptions = {
 var userSchema = new mongoose.Schema({
   name: String,
   email: { type: String, unique: true},
-  phone: String,
-  khadokGroupId: mongoose.Schema.Types.ObjectId, 
   password: String,
-  
   passwordResetToken: String,
   passwordResetExpires: Date,
   gender: String,
