@@ -1,6 +1,8 @@
 var KhadokGroup = require('../models/KhadokGroup');
 var User = require('../models/User');
 
+
+// Add a new mwmbergroup on db
 exports.addKhadokGrp = function(req, res){
     var val = req.body.khadokGrp;
 
@@ -41,7 +43,7 @@ exports.addKhadokGrp = function(req, res){
 }
 
 
-
+// Add a new mwmbe on existing khadokgroup 
 exports.addNewMemberId  = function(req, res){
     var val = req.body.khadokGrp;
     
@@ -90,32 +92,34 @@ exports.addNewMemberId  = function(req, res){
 
 
 
-
+// update time setting
 exports.updateSetting  = function(req, res){
     var val = req.body.khadokGrp;
-    
-    KhadokGroup.findById(val.id, function(err, oldGrp){
+
+    User.findById(val.membersId, function(err, user){
         if(err){
             console.log(err);
-        }else if(!oldGrp){
+        }else if(user.khadokGroupId == val.id){
+            if(user.permission == 'Manager'){
+                KhadokGroup.findByIdAndUpdate(val.id, {
+                        $set: {
+                            timeSettings: val.timeSettings,
+                        }
+                    }, function(err, khadokGrp){
+                        if(err){
+                            console.log(err);
+                        }else{
+                            res.send(khadokGrp);
+                        }
+                    })
+            }else{
+                return res.status(401).send({ msg: 'You Have Not Enough Permission'});
+            }
 
-            return res.status(401).send({ msg: 'This ' + val.name + ' is not associated with any account. ' +
-            'Double-check your Group and try again.'
-            });
-
-        } else if(oldGrp.pin == val.pin && oldGrp.name == val.name){
-            KhadokGroup.update(
-                { _id: val.id },
-                { $push: { membersId: val.membersId } }, function(err, khadokGrp){
-                    if(err){
-                        console.log(err);
-                    }else{
-                        res.send(khadokGrp);
-                    }
-                })
         }else{
-            return res.status(401).send({ msg: 'This Pin is not matched with this' + val.name + ' '
-            });
+            return res.status(401).send({ msg: 'You are not User of this Group'});
         }
     })
+    
+    
 }
